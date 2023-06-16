@@ -9,7 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -18,11 +18,12 @@
     crossorigin="anonymous"></script>
  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <div id="map" style="width:100%;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	f9abd1d9e8ab8a2bb40fa1148acda0ec&libraries=clusterer"></script>
+
 <script>
     var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
@@ -40,14 +41,68 @@
     
     // 데이터를 가져오기 위해 jQuery를 사용합니다
     // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
-    $.get("gis_1.csv", function(data) {
+
+
+//     function readCSV() {
+//     let result = "";
+//     $.ajax({
+//         url: 'gis_1.csv',
+//         dataType: 'text',
+//         async: false,
+//         success: function(data) {
+//             result = data;
+//         }
+//     })
+//     return result;
+//     }
+//     function parseJSON(data) {
+//     const list = [];
+//     const rows = data.split("\n");
+//     const header = rows[0].split(",");
+//     for(let i = 1; i < rows.length; i++) {
+//         let obj = {};
+//         for(let j = 0; j < header.length; j++) {
+//             obj[header[j]] = rows[i].split(",")[j];
+//         }
+//         list.push(obj);
+//     }
+//     // console.log(header);
+//     return list;
+// }
+// const theaterInfo = parseJSON(readCSV())
+// console.log(theaterInfo);
+
+axios({ method: 'get', url: `gis_1.csv` })
+      .then(response => {
+
+        var farmJson = response.data.farmJson
+        
+
+        for (var i = 0; i < farmJson.length; i++) {
+
+          
+        
+          // 마커를 생성합니다
+          var marker = new kakao.maps.Marker({
+            map: map, // 마커를 표시할 지도
+            position: new kakao.maps.LatLng(farmJson[i].lat, farmJson[i].long), // 마커를 표시할 위치
+            title: farmJson[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+            clickable: true,
+            
+          });
+          clusterer.addMarkers(markers);
+        }
+    });
+
+    $.get("gis_1 (2).json", function(data) {
+        var farmJson = response.data.farmJson
+        
         // 데이터에서 좌표 값을 가지고 마커를 표시합니다
         // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
-        var markers = $(data).map(function(i, position) {
-            return new kakao.maps.Marker({
+        var markers = new kakao.maps.Marker({
                 position : new kakao.maps.LatLng(position.lat, position.long)
             });
-        });
+        
         
 
         // 클러스터러에 마커들을 추가합니다
