@@ -43,35 +43,6 @@
     // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
 
 
-//     function readCSV() {
-//     let result = "";
-//     $.ajax({
-//         url: 'gis_1.csv',
-//         dataType: 'text',
-//         async: false,
-//         success: function(data) {
-//             result = data;
-//         }
-//     })
-//     return result;
-//     }
-//     function parseJSON(data) {
-//     const list = [];
-//     const rows = data.split("\n");
-//     const header = rows[0].split(",");
-//     for(let i = 1; i < rows.length; i++) {
-//         let obj = {};
-//         for(let j = 0; j < header.length; j++) {
-//             obj[header[j]] = rows[i].split(",")[j];
-//         }
-//         list.push(obj);
-//     }
-//     // console.log(header);
-//     return list;
-// }
-// const theaterInfo = parseJSON(readCSV())
-// console.log(theaterInfo);
-
 axios({ method: 'get', url: `gis_1.csv` })
       .then(response => {
 
