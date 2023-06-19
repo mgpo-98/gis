@@ -4,8 +4,13 @@ from .models import Farm
 from django.http import JsonResponse
 # Create your views here.
 def index(request):
-    pass
-    return render(request, "gis/index.html")
+    farm = Farm.objects.all()
+
+    context ={
+       'farm' : farm
+    }
+    
+    return render(request, "gis/index.html",context,)
 
 def search(request, x, y):
 
