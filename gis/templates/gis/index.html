@@ -23,7 +23,7 @@
 <div id="map" style="width:100%;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	f9abd1d9e8ab8a2bb40fa1148acda0ec&libraries=clusterer"></script>
-<p>{{ farm.farm_name }} </p>
+
 <script>
     var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
         center : new kakao.maps.LatLng(36.2683, 127.6358), // 지도의 중심좌표 
@@ -43,27 +43,7 @@
     // 데이터를 가져와 마커를 생성하고 클러스터러 객체에 넘겨줍니다
 
 
-axios({ method: 'get', url: `gis_1.csv` })
-      .then(response => {
 
-        var farmJson = response.data.farmJson
-        
-
-        for (var i = 0; i < farmJson.length; i++) {
-
-          
-        
-          // 마커를 생성합니다
-          var marker = new kakao.maps.Marker({
-            map: map, // 마커를 표시할 지도
-            position: new kakao.maps.LatLng(farmJson[i].lat, farmJson[i].long), // 마커를 표시할 위치
-            title: farmJson[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-            clickable: true,
-            
-          });
-          clusterer.addMarkers(markers);
-        }
-    });
 
     $.get("gis_1 (2).json", function(data) {
         var farmJson = response.data.farmJson
